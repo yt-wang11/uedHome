@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- 以标签形式引入 -->
     <index></index>
   </div>
 </template>
@@ -16,6 +17,7 @@ export default {
     }
   },
   components: {
+    // 注册组件
     'index':Index,
   },
 };
