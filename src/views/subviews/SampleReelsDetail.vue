@@ -24,6 +24,7 @@
           <div class="news-detail">
             <img :src="sampleReelsDetail.content" width="100%" height="550px">
           </div>
+          <comment></comment>
         </div>
       </div>
     </div>
@@ -31,12 +32,17 @@
 </template>
 <script>
 import axios from '../../libs/api.request';
+import comment from './comment.vue';
 
 export default {
   data() {
     return{
       sampleReelsDetail: [],
     }
+  },
+  components: {
+    // 用来创建子组件
+    'comment':comment
   },
   created() {
     this.$nextTick(()=>{
@@ -87,7 +93,7 @@ export default {
             color: #333;
           }
           .icon {
-            float: left;
+            float: right;
             .iconImg {
               float: left;
             }
