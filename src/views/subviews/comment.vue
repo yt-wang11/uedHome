@@ -1,23 +1,88 @@
 <template>
   <div class="cmt-container">
     <h1>发表评论</h1>
-    <textarea name="" id="" cols="159" rows="8" placeholder="请输入要评论的内容（最多120字）" maxlength="120"></textarea>
-    <el-button type="primary" size="large">发表评论</el-button>
-    <div class='cmt'>
-      <div class="cmt__item">
-        <div class="cmt__item--title">
-          第1楼&nbsp;&nbsp;用户：匿名用户&nbsp;&nbsp;发表时间：2019-08-01
-        </div>
-        <div class="cmt__item--body">
-          锄禾日当午
+    <textarea cols="159" rows="8" placeholder="请输入要评论的内容（最多120字）" maxlength="120" v-model="msg"></textarea>
+    <el-button type="primary" size="large" @click="postComment">发表评论</el-button>
+    <template v-for="(i,index) in comment">
+      <div class="cmt" :key="index">
+        <div class="cmt__item">
+          <div class="cmt__item--title">
+            <span>第{{i.id}}楼&nbsp;&nbsp;星级:{{i.title}}&nbsp;&nbsp;发表时间：2019-08-01</span>
+          </div>
+          <div class="cmt__item--body">评论内容:{{i.content}}</div>
         </div>
       </div>
+    </template>
+    <div @click="getMoreContent">
+      <el-button type="danger" size="large" plain>加载更多</el-button>
     </div>
-    <el-button type="danger" size="large" plain>加载更多</el-button>
   </div>
 </template>
+<script>
+import axios from "../../libs/api.request";
+import $ from "jquery";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      // 保存评论数据
+      comment: [],
+      msg: "",
+    };
+  },
+  created() {
+    this.$nextTick(() => {
+      this.getComment();
+    });
+  },
+  methods: {
+    getComment() {
+      axios
+        .request({
+          url: "222802/getComment",
+          method: "get",
+          params: { id: 1 }
+        })
+        .then(result => {
+          console.log(result);
+          if (result.status === 200) {
+            console.log(result.data.message);
+            this.comment = this.comment.concat(result.data.message);
+          }
+        });
+    },
+    getMoreContent() {
+      axios
+        .request({
+          url: "222802/getMoreContent",
+          method: "get",
+          params: { id: 2 }
+        })
+        .then(result => {
+          console.log(result);
+          if (result.status === 200) {
+            console.log(result.data.message);
+            this.comment = this.comment.concat(result.data.message);
+          }
+        });
+    },
+    postComment() {
+      console.log(this.msg);
+      var json = [
+        {
+          content: this.msg,
+          id: 6,
+          title: "我的看法"
+        }
+      ];
+      this.comment = this.comment.concat(json);
+    },
+  }
+};
+</script>
 <style lang="scss" scoped>
-@import '../../../static/styles/index.scss';
+@import "../../../static/styles/index.scss";
 
 h1 {
   font-size: 22px;
@@ -38,7 +103,7 @@ textarea {
   height: 50px;
 }
 .cmt {
-  @include e(item){
+  @include e(item) {
     @include m(title) {
       background-color: #ccc;
       font-size: 15px;
