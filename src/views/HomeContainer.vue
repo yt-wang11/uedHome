@@ -91,13 +91,6 @@
             </router-link>
           </div>
         </template>
-        
-      </section>
-      <!-- 测试 -->
-      <section>
-        <amount-box></amount-box>
-        <hr>
-        <counter-box></counter-box>
       </section>
     </div>
   </div>
@@ -105,8 +98,6 @@
 <script>
 import $ from 'jquery';
 import axios from '../libs/api.request';
-import amount from '@/views/amount';
-import counter from '@/views/counter';
 
 export default {
     name: 'App',
@@ -172,10 +163,6 @@ export default {
       }
 
     },
-    components: {
-      'amount-box': amount,
-      'counter-box':counter,
-    }
   }
 </script>
 
@@ -189,7 +176,7 @@ export default {
 }
 .type-area {
   width: 95%;
-  border: 1px solid red;
+  // border: 1px solid red;
   margin: 0 auto;
   .group-wrapper {
     .groups-item {
